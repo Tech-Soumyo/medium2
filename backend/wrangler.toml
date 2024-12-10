@@ -19,8 +19,8 @@ compatibility_flags = [ "nodejs_compat" ]
 
  [[d1_databases]]
  binding = "DB"
- database_name = "user-prisma-api-2"
- database_id = "c4835c0d-3c05-4e99-b985-cc342c8f04ae"
+ database_name = "user-prisma-api2"
+ database_id = "0c2bcf39-19cf-437d-af92-78d73ca3c80c"
  migrations_dir = "prisma/migrations"
 
 # [ai]
