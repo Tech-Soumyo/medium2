@@ -12,22 +12,24 @@ export const Publish = () => {
   return (
     <div>
       <Appbar />
-      <div className="flex justify-center w-full pt-8">
-        <div className="max-w-screen-lg w-full">
+      <div className="flex flex-col gap-8 p-4 md:p-10">
+        <div className="my-2 w-full">
           <input
             onChange={(e) => {
               setTitle(e.target.value);
             }}
             type="text"
-            className="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+            id="title"
+            className="bg-gray-50 text-gray-900 text-lg hover:border-blue-500 focus:border-blue-800 active:border-blue-800 outline-none block w-full p-4"
             placeholder="Title"
           />
-
-          <TextEditor
-            onChange={(e) => {
-              setDescription(e.target.value);
-            }}
-          />
+        </div>
+        <TextEditor
+          onChange={(e) => {
+            setDescription(e.target.value);
+          }}
+        />
+        <div className="my-1 ">
           <button
             onClick={async () => {
               const response = await axios.post(
@@ -38,10 +40,12 @@ export const Publish = () => {
                 },
                 {
                   headers: {
-                    Authorization: localStorage.getItem("token"),
+                    Authorization: localStorage.getItem("token") || "",
                   },
                 }
               );
+              // localStorage.setItem("authorId", response.data.user_id);
+              // localStorage.setItem("blogId", response.data.id);
               navigate(`/blog/${response.data.id}`);
             }}
             type="submit"
@@ -61,20 +65,18 @@ function TextEditor({
   onChange: (e: ChangeEvent<HTMLTextAreaElement>) => void;
 }) {
   return (
-    <div className="mt-2">
-      <div className="w-full mb-4 ">
-        <div className="flex items-center justify-between border">
-          <div className="my-2 bg-white rounded-b-lg w-full">
-            <label className="sr-only">Publish post</label>
-            <textarea
-              onChange={onChange}
-              id="editor"
-              rows={8}
-              className="focus:outline-none block w-full px-0 text-sm text-gray-800 bg-white border-0 pl-2"
-              placeholder="Write an article..."
-              required
-            />
-          </div>
+    <div className="w-full mb-4 ">
+      <div className="flex items-center justify-between border">
+        <div className="my-2 bg-white rounded-b-lg w-full">
+          <label className="sr-only">Publish post</label>
+          <textarea
+            onChange={onChange}
+            id="editor"
+            rows={8}
+            className="focus:outline-none block w-full px-0 text-sm text-gray-800 bg-white border-0 pl-2"
+            placeholder="Write an article..."
+            required
+          />
         </div>
       </div>
     </div>
