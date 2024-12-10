@@ -1,3 +1,82 @@
+// userRouter.post("/signup", async (c) => {
+//   const body = await c.req.json();
+//   const { success } = signupInput.safeParse(body);
+//   if (!success) {
+//     c.status(411);
+//     return c.json({
+//       message: "Inputs not correct",
+//     });
+//   }
+//   const prisma = new PrismaClient({
+//     datasourceUrl: c.env.DATABASE_URL,
+//   }).$extends(withAccelerate());
+
+//   try {
+//     const user = await prisma.user.create({
+//       data: {
+//         username: body.username,
+//         password: body.password,
+//         name: body.name,
+//         isAuthenticated: true,
+//       },
+//     });
+//     const jwt = await sign(
+//       {
+//         id: user.id,
+//       },
+//       c.env.JWT_SECRET
+//     );
+
+//     return c.text(jwt);
+//   } catch (e) {
+//     console.log(e);
+//     c.status(411);
+//     return c.text("Invalid");
+//   }
+// });
+
+// userRouter.post("/signin", async (c) => {
+//   const body = await c.req.json();
+//   const { success } = signinInput.safeParse(body);
+//   if (!success) {
+//     c.status(411);
+//     return c.json({
+//       message: "Inputs not correct",
+//     });
+//   }
+
+//   const prisma = new PrismaClient({
+//     datasourceUrl: c.env.DATABASE_URL,
+//   }).$extends(withAccelerate());
+
+//   try {
+//     const user = await prisma.user.findFirst({
+//       where: {
+//         username: body.username,
+//         password: body.password,
+//       },
+//     });
+//     if (!user) {
+//       c.status(403);
+//       return c.json({
+//         message: "Incorrect creds",
+//       });
+//     }
+//     const jwt = await sign(
+//       {
+//         id: user.id,
+//       },
+//       c.env.JWT_SECRET
+//     );
+
+//     return c.text(jwt);
+//   } catch (e) {
+//     console.log(e);
+//     c.status(411);
+//     return c.text("Invalid");
+//   }
+// });
+
 import { Hono } from "hono";
 import { PrismaClient } from "@prisma/client/edge";
 import { withAccelerate } from "@prisma/extension-accelerate";
@@ -10,16 +89,14 @@ export const userRouter = new Hono<{
     JWT_SECRET: string;
   };
 }>();
-
 userRouter.post("/signup", async (c) => {
   const body = await c.req.json();
   const { success } = signupInput.safeParse(body);
   if (!success) {
     c.status(411);
-    return c.json({
-      message: "Inputs not correct",
-    });
+    return c.json({ message: "Inputs not correct" });
   }
+
   const prisma = new PrismaClient({
     datasourceUrl: c.env.DATABASE_URL,
   }).$extends(withAccelerate());
@@ -27,19 +104,21 @@ userRouter.post("/signup", async (c) => {
   try {
     const user = await prisma.user.create({
       data: {
-        username: body.username,
+        email: body.email,
         password: body.password,
         name: body.name,
       },
     });
-    const jwt = await sign(
-      {
-        id: user.id,
-      },
-      c.env.JWT_SECRET
-    );
-
-    return c.text(jwt);
+    const userResponse = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    };
+    const jwt = await sign(userResponse, c.env.JWT_SECRET);
+    return c.json({
+      jwt: jwt,
+      user: userResponse,
+    });
   } catch (e) {
     console.log(e);
     c.status(411);
@@ -52,9 +131,7 @@ userRouter.post("/signin", async (c) => {
   const { success } = signinInput.safeParse(body);
   if (!success) {
     c.status(411);
-    return c.json({
-      message: "Inputs not correct",
-    });
+    return c.json({ message: "Inputs not correct" });
   }
 
   const prisma = new PrismaClient({
@@ -63,25 +140,23 @@ userRouter.post("/signin", async (c) => {
 
   try {
     const user = await prisma.user.findFirst({
-      where: {
-        username: body.username,
-        password: body.password,
-      },
+      where: { email: body.username, password: body.password },
     });
+
     if (!user) {
       c.status(403);
-      return c.json({
-        message: "Incorrect creds",
-      });
+      return c.json({ message: "Incorrect credentials" });
     }
-    const jwt = await sign(
-      {
-        id: user.id,
-      },
-      c.env.JWT_SECRET
-    );
 
-    return c.text(jwt);
+    const userResponse = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    };
+
+    const jwt = await sign(userResponse, c.env.JWT_SECRET);
+    console.log(user);
+    return c.json({ jwt: jwt, user: userResponse });
   } catch (e) {
     console.log(e);
     c.status(411);
