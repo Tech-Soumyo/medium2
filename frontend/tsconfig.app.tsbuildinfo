@@ -1,0 +1,33 @@
+{
+  "root": [
+    "./src/app.tsx",
+    "./src/config.ts",
+    "./src/main.tsx",
+    "./src/vite-env.d.ts",
+    "./src/components/appbar.tsx",
+    "./src/components/auth.tsx",
+    "./src/components/blogcard.tsx",
+    "./src/components/blogskeleton.tsx",
+    "./src/components/delete.tsx",
+    "./src/components/fullblog.tsx",
+    "./src/components/quote.tsx",
+    "./src/components/speechlisten.tsx",
+    "./src/components/spinner.tsx",
+    "./src/components/updatebutton.tsx",
+    "./src/components/suggestalert.tsx",
+    "./src/components/ui/alert-dialog.tsx",
+    "./src/components/ui/button.tsx",
+    "./src/components/ui/dropdown-menu.tsx",
+    "./src/hooks/protected.tsx",
+    "./src/hooks/useblog.ts",
+    "./src/lib/utils.ts",
+    "./src/pages/blog.tsx",
+    "./src/pages/blogs.tsx",
+    "./src/pages/genai.tsx",
+    "./src/pages/publish.tsx",
+    "./src/pages/signin.tsx",
+    "./src/pages/signup.tsx",
+    "./src/pages/updateblog.tsx"
+  ],
+  "version": "5.7.2"
+}
