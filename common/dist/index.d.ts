@@ -1,25 +1,25 @@
 import z from "zod";
 export declare const signupInput: z.ZodObject<{
-    username: z.ZodString;
+    email: z.ZodEffects<z.ZodString, string, string>;
     password: z.ZodString;
     name: z.ZodOptional<z.ZodString>;
 }, "strip", z.ZodTypeAny, {
-    username: string;
+    email: string;
     password: string;
     name?: string | undefined;
 }, {
-    username: string;
+    email: string;
     password: string;
     name?: string | undefined;
 }>;
 export declare const signinInput: z.ZodObject<{
-    username: z.ZodString;
+    email: z.ZodString;
     password: z.ZodString;
 }, "strip", z.ZodTypeAny, {
-    username: string;
+    email: string;
     password: string;
 }, {
-    username: string;
+    email: string;
     password: string;
 }>;
 export declare const creatPostInput: z.ZodObject<{
@@ -33,19 +33,19 @@ export declare const creatPostInput: z.ZodObject<{
     content: string;
 }>;
 export declare const updatePostInput: z.ZodObject<{
-    title: z.ZodString;
-    content: z.ZodString;
-    id: z.ZodNumber;
+    title: z.ZodOptional<z.ZodString>;
+    content: z.ZodOptional<z.ZodString>;
+    id: z.ZodString;
 }, "strip", z.ZodTypeAny, {
-    title: string;
-    content: string;
-    id: number;
+    id: string;
+    title?: string | undefined;
+    content?: string | undefined;
 }, {
-    title: string;
-    content: string;
-    id: number;
+    id: string;
+    title?: string | undefined;
+    content?: string | undefined;
 }>;
 export type SignupInput = z.infer<typeof signupInput>;
 export type SigninInput = z.infer<typeof signinInput>;
-export type CreateBlogInput = z.infer<typeof creatPostInput>;
-export type UpdateBlogInput = z.infer<typeof updatePostInput>;
+export type CreatePostInput = z.infer<typeof creatPostInput>;
+export type UpdatePostInput = z.infer<typeof updatePostInput>;
