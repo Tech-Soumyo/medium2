@@ -40,10 +40,21 @@ export const Auth = ({ type }: { type: "signup" | "signin" }) => {
     }
 
     try {
-     const response = await axios.post(
-       `${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`,
-       postInputs
-     );
+      // const response = await axios.post(
+      //   `${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`,
+      //   postInputs,
+      //   {
+      //     headers: {
+      //       "Content-Type": "application/json", // Ensure the server understands you're sending JSON
+      //       "Content-Length": JSON.stringify(postInputs).length.toString(),
+      //     },
+      //     withCredentials: true,
+      //   }
+      // );
+      const response = await axios.post(
+        `${BACKEND_URL}/api/v1/user/${type === "signup" ? "signup" : "signin"}`,
+        postInputs
+      );
       const jwt = response.data.jwt;
       const id = response.data.user.id;
       const username = response.data.user.name;
