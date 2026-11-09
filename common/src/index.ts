@@ -29,3 +29,7 @@ export type SignupInput = z.infer<typeof signupInput>;
 export type SigninInput = z.infer<typeof signinInput>;
 export type CreatePostInput = z.infer<typeof creatPostInput>;
 export type UpdatePostInput = z.infer<typeof updatePostInput>;
+
+export function verifyProbeFn1(): string {
+  return "reindex-probe-1-1794217408";
+}

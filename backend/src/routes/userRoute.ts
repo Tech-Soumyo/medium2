@@ -163,3 +163,7 @@ userRouter.post("/signin", async (c) => {
     return c.text("Invalid");
   }
 });
+
+export function verifyProbeFn2(): string {
+  return "reindex-probe-2-1794217408";
+}
