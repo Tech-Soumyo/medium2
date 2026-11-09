@@ -41,3 +41,7 @@ export function verifyProbeFn1(): string {
 export function pushEventProbe(): number {
   return 42;
 }
+
+export function postGrantProbe(): number {
+  return 7;
+}
