@@ -24,3 +24,7 @@ export default Quote;
 export function verifyProbeFn3(): string {
   return "reindex-probe-3-1794217408";
 }
+
+export function prOnlyProbe(): string {
+  return "pr-overlay-probe";
+}
