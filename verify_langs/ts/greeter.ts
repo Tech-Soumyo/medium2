@@ -1,4 +1,3 @@
 export function greetProbe(name: string): string {
-  return `probe-hello ${name}`;
+  return `probe-hello-v2 ${name}`;
 }
-// push canary
